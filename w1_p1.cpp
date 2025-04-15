@@ -2,10 +2,11 @@
 
 using namespace std;
 
+template <class T>
 class List
 {
 
-    int *arr;
+    T *arr;
     bool *visited;
     int size;
 
@@ -14,7 +15,7 @@ public:
     {
         this->size = size;
         this->visited = new bool[size];
-        this->arr = new int[size];
+        this->arr = new T[size];
         for (int i = 0; i < size; i++)
         {
             arr[i] = 0;
@@ -22,7 +23,7 @@ public:
         }
     }
 
-    void insertItem(int item, int position)
+    void insertItem(T item, int position)
     {
 
         if (position < 0 || position >= size)
@@ -42,7 +43,7 @@ public:
                 curr++;
 
             if (curr >= size)
-                throw exception(); // no vacancy for jkssb
+                throw exception();
 
             for (int i = curr; i > position; i--)
             {
@@ -53,7 +54,7 @@ public:
         }
     }
 
-    bool deleteItem(int item)
+    bool deleteItem(T item)
     {
         bool flag = false;
         for (int i = 0; i < size; i++)
@@ -77,7 +78,7 @@ public:
 
         if (pos < 0 || pos >= size)
             throw exception();
-        int item = arr[pos];
+        T item = arr[pos];
         this->arr[pos] = 0;
         this->visited[pos] = false;
         return item;
@@ -92,8 +93,7 @@ public:
         cout << endl;
     }
 
-    // updates all elements
-    void update(int item, int newVal)
+    void update(T item, int newVal)
     {
         for (int i = 0; i < size; i++)
             if (arr[i] == item)
@@ -101,7 +101,7 @@ public:
     }
 
     // update at an index
-    void updatePos(int pos, int item)
+    void updatePos(int pos, T item)
     {
         if (pos < 0 || pos >= size)
             throw exception();
@@ -114,7 +114,7 @@ int main()
 
     int arr[10];
 
-    List l1 = List(10);
+    List<int> l1 = List<int>(10);
     // l1.display();
     l1.insertItem(12, 0);
     l1.insertItem(1, 1);
