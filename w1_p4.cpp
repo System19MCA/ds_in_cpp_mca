@@ -57,18 +57,12 @@ char *strcat(char *str1, char *str2)
 char *strrev(char *str)
 {
 
-    char *result = str;
-    char *start = str;
-    char *end = str;
-
-    while (*str)
-        *end++;
-    while (*start && *end)
+    int len = strlen(str);
+    for (int i = 0; i <= len / 2; i++)
     {
-        *result++ = *end++;
+        swap(str[i], str[len - 1 - i]);
     }
-
-    return result;
+    return str;
 }
 
 int main()
@@ -78,6 +72,7 @@ int main()
     cout << strlen(s) << endl;
     cout << strcmp(s, p) << endl;
     // cout << strcpy(s, p);
-    cout << strcat(s, p);
+    cout << strcat(s, p) << endl;
+    cout << strrev(s) << endl;
     return 0;
 }
