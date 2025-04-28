@@ -5,6 +5,8 @@ using namespace std;
 template <class T>
 void combine(T *arr, int size, int left, int right)
 {
+    if (right <= left)
+        return;
     int mid = (left + right) / 2;
     int first = left, second = mid + 1, i = 0;
     T *temp = new T[right - left + 1];
