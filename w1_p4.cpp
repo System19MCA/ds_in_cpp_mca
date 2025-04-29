@@ -72,12 +72,15 @@ public:
 
 int main()
 {
-    char s[] = "hello";
-    char p[] = "psdf";
+    char s[100];
+    char p[100];
+    cout << "Enter string 1: ";
+    gets(s);
+    cout << "Enter string 2: ";
+    gets(p);
     String ob;
-    cout << ob.strlen(s) << endl;
+    cout << "Length of string 1 is : " << ob.strlen(s) << endl;
     cout << ob.strcmp(s, p) << endl;
-    // cout << strcpy(s, p);
     cout << ob.strcat(s, p) << endl;
     cout << ob.strrev(s) << endl;
     return 0;
