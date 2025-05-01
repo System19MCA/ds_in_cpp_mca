@@ -171,63 +171,13 @@ public:
         return temp;
     }
 
-    SparseMatrix operator&(SparseMatrix &s2) // intersection
+    T getSum()
     {
-        int size1 = this->list.size(), size2 = s2.list.size(), i = 0, j = 0;
-        SparseMatrix temp;
-        while (i < size1 && j < size2)
-        {
-            if (this->list[i] == s2.list[j])
-            {
-                SparseEntry<T> sp(this->list[i].row, s2.list[j].col, this->list[i].val);
-                temp.list.push_back(sp);
-            }
-            i++;
-            j++;
-        }
-        return temp;
-    }
-
-    SparseMatrix operator|(SparseMatrix &s2) // union
-    {
-        int size1 = this->list.size(), size2 = s2.list.size(), i = 0, j = 0;
-        SparseMatrix temp;
-        while (i < size1 && j < size2)
-        {
-            if (this->list[i] == s2.list[j])
-            {
-                SparseEntry<T> sp(this->list[i].row, s2.list[j].col, this->list[i].val);
-                temp.list.push_back(sp);
-
-                i++;
-                j++;
-            }
-            else if (this->list[i] < s2.list[j])
-            {
-                SparseEntry<T> sp(this->list[i].row, this->list[i].col, this->list[i].val);
-                temp.list.push_back(sp);
-                i++;
-            }
-            else
-            {
-                SparseEntry<T> sp(s2.list[j].row, s2.list[j].col, s2.list[j].val);
-                temp.list.push_back(sp);
-                j++;
-            }
-        }
-        while (i < size1)
-        {
-            SparseEntry<T> sp(this->list[i].row, this->list[i].col, this->list[i].val);
-            temp.list.push_back(sp);
-            i++;
-        }
-        while (j < size2)
-        {
-            SparseEntry<T> sp(s2.list[j].row, s2.list[j].col, s2.list[j].val);
-            temp.list.push_back(sp);
-            j++;
-        }
-        return temp;
+        int size = this->list.size();
+        T sum = 0;
+        for (int i = 0; i < size; i++)
+            sum += this->list[i].val;
+        return sum;
     }
 };
 
@@ -245,9 +195,8 @@ int main()
 
     SparseMatrix<int> s3 = s1 + s2;
     SparseMatrix<int> s4 = s1 - s2;
-    SparseMatrix<int> s5 = s1 & s2;
-    SparseMatrix<int> s6 = s1 | s2;
-    cout << s6;
+    cout << s4;
+    cout << "Sum of s4  " << s4.getSum() << endl;
 
     return 0;
 }

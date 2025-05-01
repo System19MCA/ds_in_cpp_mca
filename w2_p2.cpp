@@ -6,7 +6,7 @@ void quickSort(T *arr, int low, int high)
 {
     T pivot = arr[low];
     int pivotIndex = low;
-    if (high > low && high - low > 1)
+    if (high - low > 1)
     {
         int i = low + 1, j = high;
         while (j >= i)
