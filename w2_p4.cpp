@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <map>
 using namespace std;
 
 template <class T>
@@ -229,6 +230,33 @@ public:
         }
         return temp;
     }
+
+    SparseMatrix operator*(SparseMatrix &other)
+    {
+        SparseMatrix result;
+        map<pair<int, int>, T> temp;
+
+        for (auto &a : this->list)
+        {
+            for (auto &b : other.list)
+            {
+                if (a.col == b.row)
+                {
+                    temp[{a.row, b.col}] += a.val * b.val;
+                }
+            }
+        }
+
+        for (auto &entry : temp)
+        {
+            if (entry.second != 0)
+            {
+                result.list.push_back(SparseEntry<T>(entry.first.first, entry.first.second, entry.second));
+            }
+        }
+
+        return result;
+    }
 };
 
 int main()
@@ -247,7 +275,9 @@ int main()
     SparseMatrix<int> s4 = s1 - s2;
     SparseMatrix<int> s5 = s1 & s2;
     SparseMatrix<int> s6 = s1 | s2;
-    cout << s6;
+    SparseMatrix<int> s7 = s1 * s2;
+    cout << "Multiplication Result:\n"
+         << s7;
 
     return 0;
 }
