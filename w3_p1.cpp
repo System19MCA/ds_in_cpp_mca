@@ -65,31 +65,25 @@ public:
         {
             if (curr->val == target)
             {
-                Node<T> *temp = curr;
-                curr = curr->next;
-                temp->next = node;
-                node->next = curr;
+                node->next = curr->next;
+                curr->next = node;
                 return;
             }
             curr = curr->next;
         }
     }
 
-    void insertAfterNode(T num, T value)
+    void insertAfterNode(T position, T value)
     {
         int count = 0;
         Node<T> *node = new Node<T>(value);
         Node<T> *curr = head;
         while (curr != nullptr)
         {
-
-            if (count == num)
+            if (count == position)
             {
-                Node<T> *temp = curr;
-                curr = curr->next;
-                temp->next = node;
-                node->next = curr;
-
+                node->next = curr->next;
+                curr->next = node;
                 return;
             }
             count++;
@@ -130,9 +124,6 @@ public:
 
     void deleteNodeAtBeginning()
     {
-        if (head == nullptr)
-            throw exception();
-
         Node<T> *temp = head;
         head = head->next;
         delete temp;

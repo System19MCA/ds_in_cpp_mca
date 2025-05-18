@@ -33,25 +33,17 @@ public:
             throw exception();
         return matrix[r][c];
     }
-    
-    Matrix& operator+(Matrix& m2){
-        if(m2.rows != this->rows || m2.cols != this->cols) throw exception();
-        Matrix *res= new Matrix(this->rows, this->cols);
+
+    Matrix &operator+(Matrix &m2)
+    {
+        if (m2.rows != this->rows || m2.cols != this->cols)
+            throw exception();
+        Matrix *res = new Matrix(this->rows, this->cols);
         for (int i = 0; i < rows; i++)
             for (int j = 0; j < cols; j++)
                 res->matrix[i][j] = this->matrix[i][j] + m2.matrix[i][j];
-
         return *res;
     }
-    // Matrix& operator*(Matrix& m2){
-    //     if(m2.rows != this->cols || m2.cols != this->rows) throw exception();
-    //     Matrix *res= new Matrix(this->rows, this->cols);
-    //     for (int i = 0; i < rows; ++i)
-    //         for (int j = 0; j < cols; ++j)
-    //             for (int k = 0; k < cols; ++k)
-    //                 res->matrix[i][j] += this->matrix[i][k] * m2.matrix[k][j];
-    //     return *res;
-    // }
 
     friend ostream &operator<<(ostream &os, Matrix &obj)
     {
@@ -75,17 +67,35 @@ public:
         os << "]" << endl;
         return os;
     }
+
+    friend istream &operator>>(istream &is, Matrix &obj)
+    {
+        for (int i = 0; i < obj.rows; i++)
+        {
+            for (int j = 0; j < obj.cols; j++)
+            {
+                cout << "Enter element at position [" << i << "][" << j << "]: ";
+                is >> obj.matrix[i][j];
+            }
+        }
+        return is;
+    }
 };
 
 int main()
 {
     Matrix<int> m(5, 11);
-    m.add(1,2,3);
-    Matrix<int> m2(7,5);
-    m2.add(1,2,3);
-    m2.add(1,4,3);
+    m.add(1, 2, 3);
+    Matrix<int> m2(7, 5);
+    Matrix<int> m3(2, 3);
+
+    m2.add(1, 2, 3);
+    m2.add(1, 4, 3);
     // Matrix<int> m3 = m+m2;
     // Matrix<int> m4 = m*m2;
     // cout << m4;
+    cout << "Input matrix m:\n";
+    cin >> m3;
+    cout << m3;
     return 0;
 }
