@@ -32,17 +32,35 @@ public:
     void insert(T coefficient, T exponent)
     {
         Node<T> *node = new Node<T>(coefficient, exponent);
-        if (head == nullptr)
+
+        // Case 1: Empty list or insert at beginning
+        if (head == nullptr || head->exp < exponent)
         {
+            node->next = head;
             head = node;
             return;
         }
+
         Node<T> *temp = head;
-        while (temp->next != nullptr)
+        Node<T> *prev = nullptr;
+
+        // Traverse to find correct position
+        while (temp != nullptr && temp->exp >= exponent)
         {
+            if (temp->exp == exponent)
+            {
+                // Combine like terms
+                temp->coeff += coefficient;
+                delete node;
+                return;
+            }
+            prev = temp;
             temp = temp->next;
         }
-        temp->next = node;
+
+        // Insert in the middle or at the end
+        node->next = temp;
+        prev->next = node;
     }
 
     void display()
