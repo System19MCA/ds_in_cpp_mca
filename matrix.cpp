@@ -70,6 +70,7 @@ public:
 
     friend istream &operator>>(istream &is, Matrix &obj)
     {
+        cout<<"Enter elements for matrix of size["<<obj.rows<<"]["<<obj.cols<<"]"<<endl;
         for (int i = 0; i < obj.rows; i++)
         {
             for (int j = 0; j < obj.cols; j++)
@@ -91,9 +92,7 @@ int main()
 
     m2.add(1, 2, 3);
     m2.add(1, 4, 3);
-    // Matrix<int> m3 = m+m2;
-    // Matrix<int> m4 = m*m2;
-    // cout << m4;
+
     cout << "Input matrix m:\n";
     cin >> m3;
     cout << m3;
