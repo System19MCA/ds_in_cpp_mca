@@ -2,15 +2,14 @@
 
 using namespace std;
 
-template <class T>
 class Node
 {
 public:
-    T coeff;
-    T exp;
+    int coeff;
+    int exp;
     Node *next;
 
-    Node(T coeff, T exp)
+    Node(int coeff, int exp)
     {
         this->coeff = coeff;
         this->exp = exp;
@@ -18,10 +17,9 @@ public:
     }
 };
 
-template <class T>
 class Polynomail
 {
-    Node<T> *head;
+    Node *head;
 
 public:
     Polynomail()
@@ -29,9 +27,9 @@ public:
         head = nullptr;
     }
 
-    void insert(T coefficient, T exponent)
+    void insert(int coefficient, int exponent)
     {
-        Node<T> *node = new Node<T>(coefficient, exponent);
+        Node *node = new Node(coefficient, exponent);
 
         // Case 1: Empty list or insert at beginning
         if (head == nullptr || head->exp < exponent)
@@ -41,10 +39,10 @@ public:
             return;
         }
 
-        Node<T> *temp = head;
-        Node<T> *prev = nullptr;
+        Node *temp = head;
+        Node *prev = nullptr;
 
-        // Traverse to find correct position
+        // intraverse to find correct position
         while (temp != nullptr && temp->exp >= exponent)
         {
             if (temp->exp == exponent)
@@ -65,7 +63,7 @@ public:
 
     void display()
     {
-        Node<T> *temp = head;
+        Node *temp = head;
         while (temp != nullptr)
         {
             if (temp->exp != 0)
@@ -93,10 +91,10 @@ public:
 
     Polynomail operator+(Polynomail &list)
     {
-        Polynomail<T> result;
+        Polynomail result;
 
-        Node<T> *p1 = this->head;
-        Node<T> *p2 = list.head;
+        Node *p1 = this->head;
+        Node *p2 = list.head;
 
         // Copy all terms from p1 list
         while (p1 != nullptr)
@@ -108,17 +106,17 @@ public:
         // Add terms from p2 list, combining like terms
         while (p2 != nullptr)
         {
-            Node<T> *resTemp = result.head;
+            Node *resintemp = result.head;
             bool found = false;
-            while (resTemp != nullptr)
+            while (resintemp != nullptr)
             {
-                if (resTemp->exp == p2->exp)
+                if (resintemp->exp == p2->exp)
                 {
-                    resTemp->coeff += p2->coeff;
+                    resintemp->coeff += p2->coeff;
                     found = true;
                     break;
                 }
-                resTemp = resTemp->next;
+                resintemp = resintemp->next;
             }
             if (!found)
             {
@@ -130,12 +128,36 @@ public:
         return result;
     }
 
+    Polynomail &operator*(Polynomail &obj){
+        Polynomail *result = new Polynomail();
+           
+        Node *p1 = this->head;
+        Node *p2 = obj.head;
+
+        while (p1 != nullptr)
+        {             
+            Node *curr = p2;
+            while (curr !=nullptr)
+            {               
+                int coeff =p1->coeff * curr->coeff;
+                int exp =  p1->exp + curr->exp;
+                result->insert(coeff,exp);
+                curr= curr->next;
+            }
+            p1= p1->next;
+            
+        }
+
+        return *result;
+        
+
+    }
     ~Polynomail()
     {
-        Node<T> *temp = head;
+        Node *temp = head;
         while (temp != nullptr)
         {
-            Node<T> *curr = temp->next;
+            Node *curr = temp->next;
             delete temp;
             temp = curr;
         }
@@ -145,21 +167,21 @@ public:
 
 int main()
 {
-    Polynomail<int> l1;
+    Polynomail l1;
     l1.insert(2, 3);
+    // l1.insert(6, 0);
     l1.insert(4, 2);
-    l1.insert(6, 0);
     cout << "Polynomial 1: ";
     l1.display();
 
-    Polynomail<int> l2;
+    Polynomail l2;
     l2.insert(1, 4);
     l2.insert(4, 3);
-    l2.insert(5, 0);
+    // l2.insert(5, 0);
     cout << "Polynomial 2: ";
     l2.display();
 
-    Polynomail<int> result = l1 + l2;
+    Polynomail result = l1 * l2;
     cout << "Sum: ";
     result.display();
 

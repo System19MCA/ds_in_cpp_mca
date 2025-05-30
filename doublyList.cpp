@@ -49,48 +49,43 @@ public:
         tail = node;
     }
 
-    void insertAt(int pos, T val){
+    void insertAt(int pos, T val)
+    {
         Node<T> *node = new Node(val);
-        if(pos ==0 && head = nullptr){
-            head= node;
+        if (pos == 0 && head == nullptr)
+        {
+            head = node;
             return;
         }
-        if(pos == 0 ){
-            node->next= head;
-            head->prev= node;
-            head= node;
+        if (pos == 0)
+        {
+            node->next = head;
+            head->prev = node;
+            head = node;
             return;
         }
 
         Node<T> *currNode = head;
         Node<T> *prevNode = nullptr;
-        int count=0;
+        int count = 0;
 
         while (count != pos && currNode != nullptr)
         {
             prevNode = currNode;
             currNode = currNode->next;
             count++;
-
         }
-        if(count==pos){
+        if (count == pos)
+        {
             prevNode->next = node;
-            node->prev= prevNode;
-            if(currNode->next == nullptr){
-         // pending
-            }
+            node->prev = prevNode;
             node->next = currNode;
-            currNode->prev= node;
-
-
-        }else{
-            cout << "invalid positoin ";// or call insert at end
-            
+            currNode->prev = node;
         }
-        
-
-
-
+        else
+        {
+            cout << "invalid position "; // or call insert at end
+        }
     }
 
     void deleteNode(T val)
@@ -144,14 +139,48 @@ public:
         delete curr;
     }
 
-    // printing reverse
-    void display()
+    void deleteNodeAtBeginning()
+    {
+        Node<T> *temp = head;
+        if (head == nullptr)
+            return;
+        if (head->next == nullptr)
+        {
+            head = tail = nullptr;
+        }
+        else
+        {
+            head = temp->next;
+            head->prev = nullptr;
+        }
+        delete temp;
+    }
+    void deleteNodeAtEnd()
     {
         Node<T> *temp = tail;
+        if (tail == nullptr)
+            return;
+        if (head == tail)
+        {
+            head = tail = nullptr;
+        }
+        else
+        {
+            tail = temp->prev;
+            tail->next = nullptr;
+            
+        }
+        delete temp;
+    }
+        
+ 
+    void display()
+    {
+        Node<T> *temp = head;
         while (temp != nullptr)
         {
             cout << temp->val << ' ';
-            temp = temp->prev;
+            temp = temp->next;
         }
         cout << endl;
     }
@@ -164,8 +193,13 @@ int main()
     list.insert(12);
     list.insert(32);
     list.insert(34);
+    list.insert(14);
+    list.insert(54);
     list.display();
-    list.deleteNode(12);
+    // list.deleteNode(12);
+    list.deleteNodeAtBeginning();
+    list.deleteNodeAtEnd();
+    // list.insertAt(23,99);
     list.display();
 
     return 0;
