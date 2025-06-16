@@ -2,7 +2,8 @@
 #include <stack>
 using namespace std;
 
-int partition(int arr[], int low, int high) {
+int partition(int arr[], pair<int,int> lowHigh) {
+    int low = lowHigh.first, high = lowHigh.second;
     int pivot = arr[high];  
     int i = low - 1;        
     for (int j = low; j < high; ++j) {
@@ -15,27 +16,15 @@ int partition(int arr[], int low, int high) {
     return i + 1;
 }
 
-void quickSortIterative(int arr[], int low, int high) {
-    stack<int> stk;
-
-    stk.push(low);
-    stk.push(high);
-
+void quickSortIterative(int arr[], int size) {
+    stack<pair<int,int>> stk;
+    stk.push({0, size-1});
+    
     while (!stk.empty()) {
-        high = stk.top(); stk.pop();
-        low = stk.top(); stk.pop();
-
-        int pivotIndex = partition(arr, low, high);
-
-        if (pivotIndex - 1 > low) {
-            stk.push(low);
-            stk.push(pivotIndex - 1);
-        }
-
-        if (pivotIndex + 1 < high) {
-            stk.push(pivotIndex + 1);
-            stk.push(high);
-        }
+        pair<int,int> p = stk.top(); stk.pop();
+        int pivotIndex = partition(arr, p);
+        if (pivotIndex - 1 > p.first) stk.push({p.first, pivotIndex-1});
+        if (pivotIndex + 1 < p.second) stk.push({pivotIndex+1, p.second});
     }
 }
 
@@ -52,7 +41,7 @@ int main() {
     cout << "Original array:\n";
     printArray(arr, n);
 
-    quickSortIterative(arr, 0, n - 1);
+    quickSortIterative(arr, n);
 
     cout << "Sorted array:\n";
     printArray(arr, n);
